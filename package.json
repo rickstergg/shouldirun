@@ -1,0 +1,15 @@
+{
+  "name": "shouldirun",
+  "description": "Tells you if you should run or not.",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rickstergg/shouldirun.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "gtfs-realtime-bindings": "0.0.5",
+    "protobufjs": "^6.8.8",
+    "request": "^2.88.0"
+  }
+}
