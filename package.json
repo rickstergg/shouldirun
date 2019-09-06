@@ -7,6 +7,9 @@
     "url": "https://github.com/rickstergg/shouldirun.git"
   },
   "license": "ISC",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "gtfs-realtime-bindings": "0.0.5",
