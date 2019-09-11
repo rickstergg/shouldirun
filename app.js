@@ -2,6 +2,9 @@
 const request = require('request');
 const protobuf = require("protobufjs");
 const express = require('express');
+const path = require('path');
+const readline = require('readline');
+const fs = require('fs');
 const app = express();
 
 const requestSettings = {
@@ -10,7 +13,29 @@ const requestSettings = {
   encoding: null
 };
 
-app.get('/', function (req, res) {
+const getStopsHash = (path) => {
+  let hash = {};
+
+  const readInterface = readline.createInterface({
+    input: fs.createReadStream(path),
+  });
+
+  let index = 0;
+  readInterface.on('line', function(line) {
+    // Skip headers, process every direction-less stop.
+    if (index !== 0 && index % 3 === 1) {
+      const commaDelimited = line.split(',');
+      // Stop Name => Stop ID
+      hash[`${commaDelimited[2]}`] = commaDelimited[0];
+      console.log(hash);
+    }
+    index++;
+  });
+
+  return hash;
+};
+
+app.post('/', function (req, res) {
   protobuf.load("mta.proto", function(err, root) {
     // Load the mta.proto and gtfs-realtime.proto into protobuf
     if (err)
@@ -25,7 +50,6 @@ app.get('/', function (req, res) {
         message.entity.forEach((entity) => {
           if (entity.vehicle && entity.vehicle.trip.routeId === '1') {
             // Vehicle Position
-            // console.log(entity.vehicle.trip['.nyctTripDescriptor']);
           } else if(entity.tripUpdate && entity.tripUpdate.trip.routeId === '1' && entity.tripUpdate.trip['.nyctTripDescriptor'].direction === 3) {
             // Trip Update
             // Find the relevant stop, 124S
@@ -46,6 +70,12 @@ app.get('/', function (req, res) {
       }
     });
   });
+});
+
+app.get('/', function (req, res) {
+  // Build the stops hash using stops.txt in data.
+  const stops = getStopsHash('data/stops.txt');
+  res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 app.listen(process.env.PORT || 5000);
