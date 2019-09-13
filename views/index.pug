@@ -1,0 +1,11 @@
+html
+  head
+    title= "Should I run"
+  body
+    h1= "Choose your inputs!"
+    select
+      each stop in stops.data
+        option(value=stop.value selected=(stop.value === "124")) #{stop.key}
+    select
+      each route in routes.data
+        option(value=route.routeId selected=(route.routeId === "1")) #{route.routeId + ' - ' + route.longName}

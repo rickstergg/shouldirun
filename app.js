@@ -1,38 +1,20 @@
-// const GtfsRealtimeBindings = require('gtfs-realtime-bindings');
 const request = require('request');
 const protobuf = require("protobufjs");
 const express = require('express');
 const path = require('path');
 const readline = require('readline');
 const fs = require('fs');
+const pug = require('pug');
 const app = express();
+const stops = require('./data/stops.json');
+const routes = require('./data/routes.json');
+
+app.set('view engine', 'pug');
 
 const requestSettings = {
   method: 'GET',
   url: 'http://datamine.mta.info/mta_esi.php?key=e26f09accebd90636922e54bf4de06cf&feed_id=1',
   encoding: null
-};
-
-const getStopsHash = (path) => {
-  let hash = {};
-
-  const readInterface = readline.createInterface({
-    input: fs.createReadStream(path),
-  });
-
-  let index = 0;
-  readInterface.on('line', function(line) {
-    // Skip headers, process every direction-less stop.
-    if (index !== 0 && index % 3 === 1) {
-      const commaDelimited = line.split(',');
-      // Stop Name => Stop ID
-      hash[`${commaDelimited[2]}`] = commaDelimited[0];
-      console.log(hash);
-    }
-    index++;
-  });
-
-  return hash;
 };
 
 app.post('/', function (req, res) {
@@ -73,9 +55,7 @@ app.post('/', function (req, res) {
 });
 
 app.get('/', function (req, res) {
-  // Build the stops hash using stops.txt in data.
-  const stops = getStopsHash('data/stops.txt');
-  res.sendFile(path.join(__dirname + '/index.html'));
+  res.render('index', { stops, routes });
 });
 
 app.listen(process.env.PORT || 5000);
