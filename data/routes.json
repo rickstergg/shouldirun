@@ -1,0 +1,178 @@
+{
+  "data": [
+    {
+      "routeId": "1",
+      "color": "EE352E",
+      "shortName": "1",
+      "longName": "Broadway - 7 Avenue Local"
+    },
+    {
+      "routeId": "2",
+      "color": "EE352E",
+      "shortName": "2",
+      "longName": "7 Avenue Express"
+    },
+    {
+      "routeId": "3",
+      "color": "EE352E",
+      "shortName": "3",
+      "longName": "7 Avenue Express"
+    },
+    {
+      "routeId": "4",
+      "color": "00933C",
+      "shortName": "4",
+      "longName": "Lexington Avenue Express"
+    },
+    {
+      "routeId": "5",
+      "color": "00933C",
+      "shortName": "5",
+      "longName": "Lexington Avenue Express"
+    },
+    {
+      "routeId": "5X",
+      "color": "00933C",
+      "shortName": "5X",
+      "longName": "Lexington Avenue Express"
+    },
+    {
+      "routeId": "6",
+      "color": "00933C",
+      "shortName": "6",
+      "longName": "Lexington Avenue Local"
+    },
+    {
+      "routeId": "6X",
+      "color": "00A65C",
+      "shortName": "6X",
+      "longName": "Lexington Avenue Express"
+    },
+    {
+      "routeId": "7",
+      "color": "B933AD",
+      "shortName": "7",
+      "longName": "Flushing Local"
+    },
+    {
+      "routeId": "7X",
+      "color": "B933AD",
+      "shortName": "7X",
+      "longName": "Flushing Express"
+    },
+    {
+      "routeId": "GS",
+      "color": "6D6E71",
+      "shortName": "S",
+      "longName": "42 St Shuttle"
+    },
+    {
+      "routeId": "A",
+      "color": "2850AD",
+      "shortName": "A",
+      "longName": "8 Avenue Express"
+    },
+    {
+      "routeId": "B",
+      "color": "FF6319",
+      "shortName": "B",
+      "longName": "6 Avenue Express"
+    },
+    {
+      "routeId": "C",
+      "color": "2850AD",
+      "shortName": "C",
+      "longName": "8 Avenue Local"
+    },
+    {
+      "routeId": "D",
+      "color": "FF6319",
+      "shortName": "D",
+      "longName": "6 Avenue Express"
+    },
+    {
+      "routeId": "E",
+      "color": "2850AD",
+      "shortName": "E",
+      "longName": "8 Avenue Local"
+    },
+    {
+      "routeId": "F",
+      "color": "FF6319",
+      "shortName": "F",
+      "longName": "Queens Blvd Express/ 6 Av Local"
+    },
+    {
+      "routeId": "FS",
+      "color": "",
+      "shortName": "S",
+      "longName": "Franklin Avenue Shuttle"
+    },
+    {
+      "routeId": "G",
+      "color": "6CBE45",
+      "shortName": "G",
+      "longName": "Brooklyn-Queens Crosstown"
+    },
+    {
+      "routeId": "J",
+      "color": "996633",
+      "shortName": "J",
+      "longName": "Nassau St Local"
+    },
+    {
+      "routeId": "L",
+      "color": "A7A9AC",
+      "shortName": "L",
+      "longName": "14 St-Canarsie Local"
+    },
+    {
+      "routeId": "M",
+      "color": "FF6319",
+      "shortName": "M",
+      "longName": "QNS BLVD-6th AVE/ Myrtle Local"
+    },
+    {
+      "routeId": "N",
+      "color": "FCCC0A",
+      "shortName": "N",
+      "longName": "Broadway Local"
+    },
+    {
+      "routeId": "Q",
+      "color": "FCCC0A",
+      "shortName": "Q",
+      "longName": "Broadway Express"
+    },
+    {
+      "routeId": "R",
+      "color": "FCCC0A",
+      "shortName": "R",
+      "longName": "Broadway Local"
+    },
+    {
+      "routeId": "H",
+      "color": "",
+      "shortName": "S",
+      "longName": "Rockaway Park Shuttle"
+    },
+    {
+      "routeId": "W",
+      "color": "FCCC0A",
+      "shortName": "W",
+      "longName": "Broadway Local"
+    },
+    {
+      "routeId": "Z",
+      "color": "996633",
+      "shortName": "Z",
+      "longName": "Nassau St Express"
+    },
+    {
+      "routeId": "SI",
+      "color": "",
+      "shortName": "SIR",
+      "longName": "Staten Island Railway"
+    }
+  ]
+}
