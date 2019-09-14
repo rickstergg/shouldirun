@@ -10,6 +10,7 @@ const stops = require('./data/stops.json');
 const routes = require('./data/routes.json');
 
 app.set('view engine', 'pug');
+app.use(express.urlencoded({ extended: true }));
 
 const requestSettings = {
   method: 'GET',
@@ -18,6 +19,8 @@ const requestSettings = {
 };
 
 app.post('/', function (req, res) {
+  const { stopId, routeId, direction } = req.body;
+
   protobuf.load("mta.proto", function(err, root) {
     // Load the mta.proto and gtfs-realtime.proto into protobuf
     if (err)
@@ -30,24 +33,23 @@ app.post('/', function (req, res) {
         const message = FeedMessage.decode(body);
         const timings = [];
         message.entity.forEach((entity) => {
-          if (entity.vehicle && entity.vehicle.trip.routeId === '1') {
+          if (entity.vehicle && entity.vehicle.trip.routeId === routeId) {
             // Vehicle Position
-          } else if(entity.tripUpdate && entity.tripUpdate.trip.routeId === '1' && entity.tripUpdate.trip['.nyctTripDescriptor'].direction === 3) {
+          } else if(entity.tripUpdate && entity.tripUpdate.trip.routeId === routeId && entity.tripUpdate.trip['.nyctTripDescriptor'].direction === direction) {
             // Trip Update
-            // Find the relevant stop, 124S
             entity.tripUpdate.stopTimeUpdate.forEach((stop) => {
-              if (stop.stopId === '124S') {
+              if (stop.stopId === stopId) {
                 const d = new Date();
                 const posix = d.getTime() / 1000;
                 const difference = stop.arrival.time.low - posix;
                 const minutes = Math.round(difference / 60);
-                console.log(minutes);
                 timings.push(minutes);
               }
             });
           }
         });
 
+        console.log(timings);
         res.send(timings.join(', '));
       }
     });

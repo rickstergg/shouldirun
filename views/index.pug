@@ -1,11 +1,17 @@
+doctype html
 html
   head
     title= "Should I run"
   body
     h1= "Choose your inputs!"
-    select
-      each stop in stops.data
-        option(value=stop.value selected=(stop.value === "124")) #{stop.key}
-    select
-      each route in routes.data
-        option(value=route.routeId selected=(route.routeId === "1")) #{route.routeId + ' - ' + route.longName}
+    form(id="runform" method='POST' action='/')
+      select(name="stopId" form="runform")
+        each stop in stops.data
+          option(value=stop.value selected=(stop.value === "124")) #{stop.key}
+      select(name="routeId" form="runform")
+        each route in routes.data
+          option(value=route.routeId selected=(route.routeId === "1")) #{route.routeId + ' - ' + route.longName}
+      select(name="direction" form="runform")
+        option(value='1') Northbound (considered Manhattan bound)
+        option(value='3' selected=true) Southbound
+      button(type='submit') Should I Run?
