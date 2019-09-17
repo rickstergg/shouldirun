@@ -1,6 +1,8 @@
 const express = require('express');
 const pug = require('pug');
 const app = express();
+const request = require('request');
+const protobuf = require('protobufjs');
 const stops = require('./data/stops.json');
 const routes = require('./data/routes.json');
 const { getNextTrainTimes } = require('./utils/getNextTrainTimes');
@@ -8,9 +10,30 @@ const { getNextTrainTimes } = require('./utils/getNextTrainTimes');
 app.set('view engine', 'pug');
 app.use(express.urlencoded({ extended: true }));
 
+// TODO, create a feedId mapping for different routes.
+const requestSettings = {
+  method: 'GET',
+  url: 'http://datamine.mta.info/mta_esi.php?key=e26f09accebd90636922e54bf4de06cf&feed_id=1',
+  encoding: null
+};
+
 app.post('/', function (req, res) {
   const { stopId, routeId, direction } = req.body;
-  getNextTrainTimes(stopId.toString(), routeId.toString(), direction.toString(), res);
+
+  // Load the mta.proto and gtfs-realtime.proto into protobuf
+  protobuf.load("./data/proto/mta.proto", function(err, root) {
+    if (err) {
+      throw err;
+    }
+
+    request(requestSettings, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        const message = root.lookupType("transit_realtime.FeedMessage").decode(body);
+        const upcomingArrivals = getNextTrainTimes(message, stopId.toString(), routeId.toString(), direction.toString());
+        res.send(upcomingArrivals.join(', '));
+      }
+    });
+  });
 });
 
 app.get('/', function (req, res) {
