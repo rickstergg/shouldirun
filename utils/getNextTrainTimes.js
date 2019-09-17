@@ -16,7 +16,7 @@ const requestSettings = {
  */
 const getNextTrainTimes = (stopId, routeId, direction, res) => {
 // Load the mta.proto and gtfs-realtime.proto into protobuf
-  protobuf.load("mta.proto", function(err, root) {
+  protobuf.load("./data/proto/mta.proto", function(err, root) {
     if (err) {
       throw err;
     }
