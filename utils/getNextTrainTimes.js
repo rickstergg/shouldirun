@@ -1,3 +1,9 @@
+// Need to know what the direction enumerations really mean.
+const directionMapping = {
+  1: 'NORTH',
+  3: 'SOUTH',
+}
+
 /*
  * Print out the next predicted arrival times of the next train for a certain stop.
  *
@@ -7,20 +13,25 @@
 const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
   const upcomingArrivals = [];
   feedMessage.entity.forEach((entity) => {
-    if (entity.vehicle && entity.vehicle.trip.routeId === routeId) {
-      // Vehicle Position
-    } else if(entity.tripUpdate && entity.tripUpdate.trip.routeId == routeId && entity.tripUpdate.trip['.nyctTripDescriptor'].direction == direction) {
-      // Trip Update
-      entity.tripUpdate.stopTimeUpdate.forEach((stop) => {
-        if (stop.stopId == stopId.toString() + (direction === '1' ? 'N' : 'S')) {
-          const today = new Date();
-          const minutesUntilArrival = Math.round((stop.arrival.time.low - (today.getTime() / 1000)) / 60);
-          upcomingArrivals.push(minutesUntilArrival);
-        }
-      });
+    if(entity.tripUpdate) {
+      const tripRouteId = entity.tripUpdate.trip.routeId;
+      const tripDirection = entity.tripUpdate.trip['.nyctTripDescriptor'].direction;
+      const stopTimeUpdates = entity.tripUpdate.stopTimeUpdate;
+
+      if (tripRouteId == routeId && ((tripDirection == direction) || (tripDirection == directionMapping[direction]))) {
+        stopTimeUpdates.forEach((stop) => {
+          if (stop.stopId == stopId + (direction == '1' ? 'N' : 'S')) {
+            const today = Date.now();
+            // TODO: Investigate why there's a difference between the test JSON and production.
+            let time = stop.arrival.time;
+            time = time.low ? time.low : time;
+            const minutesUntilArrival = Math.round((time - (today / 1000)) / 60);
+            upcomingArrivals.push(minutesUntilArrival);
+          }
+        });
+      }
     }
   });
-
   return upcomingArrivals;
 }
 
