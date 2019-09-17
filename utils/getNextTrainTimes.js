@@ -1,5 +1,5 @@
 const request = require('request');
-const protobuf = require("protobufjs");
+const protobuf = require('protobufjs');
 
 // TODO, create a feedId mapping for different routes.
 const requestSettings = {
