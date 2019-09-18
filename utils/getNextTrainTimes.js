@@ -1,14 +1,15 @@
-// Need to know what the direction enumerations really mean.
-const directionMapping = {
-  1: 'NORTH',
-  3: 'SOUTH',
-}
+/*
+ * Compare to elements in an array for sorting.
+ *
+ * compare(a, b);
+ */
+const compare = (a, b) => (a - b);
 
 /*
  * Print out the next predicted arrival times of the next train for a certain stop.
  *
- * getNextTrainTimes('124', '1', '3', res)
- * where 'res' is the express response
+ * getNextTrainTimes({ message }, '124', '1', '3')
+ * where 'message' is the feed message from the MTA API.
  */
 const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
   const upcomingArrivals = [];
@@ -18,7 +19,7 @@ const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
       const tripDirection = entity.tripUpdate.trip['.nyctTripDescriptor'].direction;
       const stopTimeUpdates = entity.tripUpdate.stopTimeUpdate;
 
-      if (tripRouteId == routeId && ((tripDirection == direction) || (tripDirection == directionMapping[direction]))) {
+      if (tripRouteId == routeId && (tripDirection == direction)) {
         stopTimeUpdates.forEach((stop) => {
           if (stop.stopId == stopId + (direction == '1' ? 'N' : 'S')) {
             const today = Date.now();
@@ -29,7 +30,8 @@ const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
       }
     }
   });
-  return upcomingArrivals;
+
+  return upcomingArrivals.sort(compare);
 }
 
 module.exports = {
