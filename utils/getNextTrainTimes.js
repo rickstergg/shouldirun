@@ -12,7 +12,7 @@ const compare = (a, b) => (a - b);
  * where 'message' is the feed message from the MTA API.
  */
 const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
-  const upcomingArrivals = [];
+  let upcomingArrivals = [];
   feedMessage.entity.forEach((entity) => {
     if(entity.tripUpdate) {
       const tripRouteId = entity.tripUpdate.trip.routeId;
@@ -31,6 +31,7 @@ const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
     }
   });
 
+  upcomingArrivals = upcomingArrivals.filter((number) => number > -1);
   return upcomingArrivals.sort(compare);
 }
 
