@@ -22,10 +22,7 @@ const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
         stopTimeUpdates.forEach((stop) => {
           if (stop.stopId == stopId + (direction == '1' ? 'N' : 'S')) {
             const today = Date.now();
-            // TODO: Investigate why there's a difference between the test JSON and production.
-            let time = stop.arrival.time;
-            time = time.low ? time.low : time;
-            const minutesUntilArrival = Math.round((time - (today / 1000)) / 60);
+            const minutesUntilArrival = Math.round((stop.arrival.time.low - (today / 1000)) / 60);
             upcomingArrivals.push(minutesUntilArrival);
           }
         });
