@@ -30,7 +30,7 @@ app.post('/', function (req, res) {
       if (!error && response.statusCode == 200) {
         const message = root.lookupType("transit_realtime.FeedMessage").decode(body);
         const upcomingArrivals = getNextTrainTimes(message, stopId.toString(), routeId.toString(), direction.toString());
-        res.send(upcomingArrivals.join(', '));
+        upcomingArrivals.length ? res.send(upcomingArrivals.join(', ')) : res.send('There are currently no trains going to this stop.');
       }
     });
   });
