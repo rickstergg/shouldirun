@@ -1,4 +1,4 @@
-const { getNextTrainTimes } = require('./getNextTrainTimes');
+const { compare, getNextTrainTimes } = require('./getNextTrainTimes');
 const data = require('../test/data/standardResp');
 
 describe('getNextTrainTimes', () => {
@@ -17,3 +17,10 @@ describe('getNextTrainTimes', () => {
     expect(getNextTrainTimes(data, '124', '1', '3')).toEqual(times);
   });
 });
+
+describe('compare', () => {
+  it('compares two numbers properly', () => {
+    expect(compare(10, 1)).toEqual(9);
+  });
+});
+

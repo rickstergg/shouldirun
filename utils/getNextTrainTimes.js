@@ -36,5 +36,6 @@ const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
 }
 
 module.exports = {
+  compare,
   getNextTrainTimes,
 }
