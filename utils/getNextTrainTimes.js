@@ -23,8 +23,10 @@ const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
         stopTimeUpdates.forEach((stop) => {
           if (stop.stopId == stopId + (direction == '1' ? 'N' : 'S')) {
             const today = Date.now();
-            const minutesUntilArrival = Math.round((stop.arrival.time.low - (today / 1000)) / 60);
-            upcomingArrivals.push(minutesUntilArrival);
+            if (stop.arrival) {
+              const minutesUntilArrival = Math.round((stop.arrival.time.low - (today / 1000)) / 60);
+              upcomingArrivals.push(minutesUntilArrival);
+            }
           }
         });
       }
