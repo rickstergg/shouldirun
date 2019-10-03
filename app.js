@@ -5,7 +5,7 @@ const request = require('request');
 const protobuf = require('protobufjs');
 const stops = require('./data/stops.json');
 const routes = require('./data/routes.json');
-const { getNextTrainTimes } = require('./utils/getNextTrainTimes');
+const { getNextTrainTimes } = require('./utils');
 
 app.set('view engine', 'pug');
 app.use(express.urlencoded({ extended: true }));
