@@ -15,10 +15,10 @@
     "express": "^4.17.1",
     "gtfs-realtime-bindings": "0.0.5",
     "protobufjs": "^6.8.8",
-    "pug": "^2.0.4",
+    "pug": "^3.0.2",
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "jest": "^27.3.1"
   }
 }

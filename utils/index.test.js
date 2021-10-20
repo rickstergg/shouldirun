@@ -1,4 +1,4 @@
-const { compare, getFeedIDFromTrain, getNextTrainTimes } = require('./getNextTrainTimes');
+const { compare, getFeedUrlFromTrain, getNextTrainTimes } = require('./getNextTrainTimes');
 const data = require('../test/data/standardResp');
 
 describe('getNextTrainTimes', () => {
@@ -24,59 +24,57 @@ describe('compare', () => {
   });
 });
 
-describe('getFeedIDFromTrain', () => {
+describe('getFeedUrlFromTrain', () => {
+  const baseUrl = 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs';
+
   it('returns the feed ID as a string', () => {
-    expect(typeof getFeedIDFromTrain('1')).toBe('string');
+    expect(typeof getFeedUrlFromTrain('1')).toBe('string');
   });
 
   it('returns the right feed ID for 1, 2, 3, 4, 5, 6, S trains', () => {
-    expect(getFeedIDFromTrain('1')).toEqual('1');
-    expect(getFeedIDFromTrain('2')).toEqual('1');
-    expect(getFeedIDFromTrain('3')).toEqual('1');
-    expect(getFeedIDFromTrain('4')).toEqual('1');
-    expect(getFeedIDFromTrain('5')).toEqual('1');
-    expect(getFeedIDFromTrain('6')).toEqual('1');
-    expect(getFeedIDFromTrain('S')).toEqual('1');
+    expect(getFeedUrlFromTrain('1')).toEqual(baseUrl);
+    expect(getFeedUrlFromTrain('2')).toEqual(baseUrl);
+    expect(getFeedUrlFromTrain('3')).toEqual(baseUrl);
+    expect(getFeedUrlFromTrain('4')).toEqual(baseUrl);
+    expect(getFeedUrlFromTrain('5')).toEqual(baseUrl);
+    expect(getFeedUrlFromTrain('6')).toEqual(baseUrl);
+    expect(getFeedUrlFromTrain('7')).toEqual(baseUrl);
   });
 
   it('returns the right feed ID for A, C, E trains', () => {
-    expect(getFeedIDFromTrain('A')).toEqual('26');
-    expect(getFeedIDFromTrain('C')).toEqual('26');
-    expect(getFeedIDFromTrain('E')).toEqual('26');
+    expect(getFeedUrlFromTrain('A')).toEqual(baseUrl + 'ace');
+    expect(getFeedUrlFromTrain('C')).toEqual(baseUrl + 'ace');
+    expect(getFeedUrlFromTrain('E')).toEqual(baseUrl + 'ace');
   });
 
   it('returns the right feed ID for N, Q, R, W trains', () => {
-    expect(getFeedIDFromTrain('N')).toEqual('16');
-    expect(getFeedIDFromTrain('Q')).toEqual('16');
-    expect(getFeedIDFromTrain('R')).toEqual('16');
-    expect(getFeedIDFromTrain('W')).toEqual('16');
+    expect(getFeedUrlFromTrain('N')).toEqual(baseUrl + '-nqrw');
+    expect(getFeedUrlFromTrain('Q')).toEqual(baseUrl + '-nqrw');
+    expect(getFeedUrlFromTrain('R')).toEqual(baseUrl + '-nqrw');
+    expect(getFeedUrlFromTrain('W')).toEqual(baseUrl + '-nqrw');
   });
 
   it('returns the right feed ID for B, D, F, M trains', () => {
-    expect(getFeedIDFromTrain('B')).toEqual('21');
-    expect(getFeedIDFromTrain('D')).toEqual('21');
-    expect(getFeedIDFromTrain('F')).toEqual('21');
-    expect(getFeedIDFromTrain('M')).toEqual('21');
+    expect(getFeedUrlFromTrain('B')).toEqual(baseUrl + '-bdfm');
+    expect(getFeedUrlFromTrain('D')).toEqual(baseUrl + '-bdfm');
+    expect(getFeedUrlFromTrain('F')).toEqual(baseUrl + '-bdfm');
+    expect(getFeedUrlFromTrain('M')).toEqual(baseUrl + '-bdfm');
   });
 
   it('returns the right feed ID for L trains', () => {
-    expect(getFeedIDFromTrain('L')).toEqual('2');
+    expect(getFeedUrlFromTrain('L')).toEqual(baseUrl + '-l');
   });
 
   it('returns the right feed ID for G trains', () => {
-    expect(getFeedIDFromTrain('G')).toEqual('31');
+    expect(getFeedUrlFromTrain('G')).toEqual(baseUrl + '-g');
   });
 
   it('returns the right feed ID for J, Z trains', () => {
-    expect(getFeedIDFromTrain('J')).toEqual('36');
-    expect(getFeedIDFromTrain('Z')).toEqual('36');
-  });
-
-  it('returns the right feed ID for 7 trains', () => {
-    expect(getFeedIDFromTrain('7')).toEqual('51');
+    expect(getFeedUrlFromTrain('J')).toEqual(baseUrl + '-jz');
+    expect(getFeedUrlFromTrain('Z')).toEqual(baseUrl + '-jz');
   });
 
   it('returns over 9000, (there is no way that could be right) if train ID is invalid', () => {
-    expect(getFeedIDFromTrain('GG')).toEqual('9001');
+    expect(getFeedUrlFromTrain('GG')).toEqual('9001');
   });
 });

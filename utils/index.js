@@ -38,29 +38,28 @@ const getNextTrainTimes = (feedMessage, stopId, routeId, direction) => {
 }
 
 /*
- * Get a feed ID used for the API request based off of a Train ID.
+ * Get a feed URL used for the API request based off of a Train number / letter.
  *
- * getFeedIDFromTrain('3') => '1'
- * where the list is from https://datamine.mta.info/list-of-feeds.
+ * getFeedUrlFromTrain('A') => 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-ace'
+ * where the list is from https://api.mta.info/#/subwayRealTimeFeeds.
  */
-const getFeedIDFromTrain = (trainId) => {
+const getFeedUrlFromTrain = (trainId) => {
+  const baseUrl = 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs';
   switch(trainId) {
-    case '1': case '2': case '3': case '4': case '5': case '6': case 'S':
-      return '1';
+    case '1': case '2': case '3': case '4': case '5': case '6': case '7':
+      return baseUrl;
     case 'A': case 'C': case 'E':
-      return '26';
+      return baseUrl + '-ace';
     case 'N': case 'Q': case 'R': case 'W':
-      return '16';
+      return baseUrl + '-nqrw';
     case 'B': case 'D': case 'F': case 'M':
-      return '21';
+      return baseUrl + '-bdfm';
     case 'L':
-      return '2';
+      return baseUrl + '-l';
     case 'G':
-      return '31';
+      return baseUrl + '-g';
     case 'J': case 'Z':
-      return '36';
-    case '7':
-      return '51';
+      return baseUrl + '-jz';
     default:
       return '9001';
   }
@@ -68,6 +67,6 @@ const getFeedIDFromTrain = (trainId) => {
 
 module.exports = {
   compare,
-  getFeedIDFromTrain,
+  getFeedUrlFromTrain,
   getNextTrainTimes,
 }
