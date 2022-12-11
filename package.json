@@ -12,7 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "gtfs-realtime-bindings": "0.0.5",
     "protobufjs": "^6.8.8",
     "pug": "^3.0.2",
